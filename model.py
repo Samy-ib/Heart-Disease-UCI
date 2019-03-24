@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(13,50)
-        self.fc2 = nn.Linear(50,2)
-        # self.fc3 = nn.Linear(32, 16)
+        self.fc1 = nn.Linear(13,70)
+        self.fc2 = nn.Linear(70,2)
+        # self.fc3 = nn.Linear(35, 2)
         # self.fc4 = nn.Linear(16, 2)
 
         self.dropout = nn.Dropout(p=0.0)
@@ -62,15 +62,9 @@ def test(network, criterion, testloader):
             predict = network(X)
             _, predict_y = torch.max(predict, 1)
 
-            # print("Y:", Y)
-            # print('P:', predict_y)
-
-            accuracy = accuracy + (torch.sum(Y==predict_y).float() / len(Y))
-            # accuracy /= 4
-            # print('A:',accuracy)
+            accuracy = accuracy + (torch.sum(Y==predict_y).float())
         
-        # accuracy /= 4
-        return testing_loss/len(testloader), 100*accuracy/len(testloader)
+        return testing_loss/len(testloader), 100*accuracy/(len(testloader)*len(Y))
 
 def log(epochs, epoch, trainL, testL, acc):
     print("Epoch: {}/{}.. ".format(epoch+1, epochs),
